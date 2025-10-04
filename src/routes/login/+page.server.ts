@@ -7,6 +7,7 @@ import fs from 'fs';
 import { readSessions, userSessionFilePath } from '$lib/server/utils';
 
 export const load = ({ locals }) => {
+    console.log('==>', { locals })
     if (locals.user) redirect(303, '/');
 };
 

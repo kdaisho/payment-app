@@ -3,6 +3,7 @@
         "id": "user_123",
         "email": "user@example.com",
         "name": "John Doe",
-        "password": "$2b$12$V8jbceriUu8oeRY74z7tNudSyNtx7ajJdBlvbI8U2bN7aFqpJyU2e"
+        "password": "$2b$12$V8jbceriUu8oeRY74z7tNudSyNtx7ajJdBlvbI8U2bN7aFqpJyU2e",
+        "stripeCustomerId": "cus_TAyggV58bwKChW"
     }
 ]
