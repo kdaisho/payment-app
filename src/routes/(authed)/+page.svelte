@@ -2,11 +2,7 @@
 	import { enhance } from '$app/forms';
 	import type { PageProps } from './$types';
 
-	// export let data: PageData;
-
-	let { form, data }: PageProps = $props();
-
-	console.log('==>', data, form);
+	let { data }: PageProps = $props();
 </script>
 
 <h1>Store</h1>

@@ -9,7 +9,11 @@ import { z } from 'zod'
 import type { Actions } from './$types';
 import { fail, redirect } from '@sveltejs/kit';
 
-export const load = async () => {
+const stripe = new Stripe(STRIPE_SECRET_KEY, { apiVersion: '2025-09-30.clover' });
+
+export const load = async ({ locals }) => {
+    if (!locals.user) throw redirect(303, '/login');
+
     return {
         products,
         ownedProducts
@@ -17,7 +21,8 @@ export const load = async () => {
 };
 
 export const actions = {
-    createCheckoutSession: async ({ request }) => {
+    createCheckoutSession: async ({ locals, request }) => {
+        if (!locals.user) throw redirect(303, '/login');
         // TODO: validate user is logged in
         const data = await request.formData();
         const productId = data.get('productId');
@@ -28,7 +33,7 @@ export const actions = {
         const product = products.find((p) => p.id === productId);
         if (!product) return fail(404, { productId, error: 'Product not found' });
 
-        const stripe = new Stripe(STRIPE_SECRET_KEY, { apiVersion: '2025-09-30.clover' });
+
         const session = await stripe.checkout.sessions.create({
             mode: 'payment',
             line_items: [
