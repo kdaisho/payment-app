@@ -4,7 +4,13 @@ declare global {
 	namespace App {
 		// interface Error {}
 		// interface Locals {}
-		// interface PageData {}
+		interface PageData {
+			params?: Record<string, unknown>;
+			products?: Array<{ id: string; name: string; description?: string; price: number }>;
+			ownedProducts?: Array<{ id: string; name: string }>;
+			// Optional action form state returned by SvelteKit actions
+			form?: unknown;
+		}
 		// interface PageState {}
 		// interface Platform {}
 	}

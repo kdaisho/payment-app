@@ -36,5 +36,9 @@
 		"onlyBuiltDependencies": [
 			"esbuild"
 		]
+	},
+	"dependencies": {
+		"stripe": "^19.1.0",
+		"zod": "^4.1.11"
 	}
 }
