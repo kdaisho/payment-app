@@ -3,28 +3,19 @@ import { fullFillPayment, stripe } from '$lib/server/utils.js';
 import { error } from '@sveltejs/kit';
 
 export const POST = async ({ request }) => {
-    console.log('REQ:', request);
-    console.log('REQ.BODY:', request.body);
-
-    const data = await request.json();
-
-    console.log('REQ DATA:', data);
-
     const signature = request.headers.get('stripe-signature')
-    console.log('signature:', signature);
-
     if (!signature || !STRIPE_WEBHOOK_SECRET) {
         return error(400, 'Missing signature or webhook secret');
     }
 
+    const rawBody = await request.text()
+
     try {
         const event = stripe.webhooks.constructEvent(
-            JSON.stringify(data),
+            rawBody,
             signature,
             STRIPE_WEBHOOK_SECRET
         );
-
-        console.log('EVENT:', event);
 
         switch (event.type) {
             case 'checkout.session.completed':

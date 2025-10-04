@@ -2,19 +2,23 @@
     "user_123": [
         {
             "id": "p-1",
-            "quantity": 4
+            "quantity": 8
         },
         {
             "id": "p-3",
-            "quantity": 3
+            "quantity": 4
         },
         {
             "id": "p-4",
-            "quantity": 1
+            "quantity": 2
         },
         {
             "id": "p-5",
-            "quantity": 2
+            "quantity": 3
+        },
+        {
+            "id": "p-2",
+            "quantity": 3
         }
     ]
 }
