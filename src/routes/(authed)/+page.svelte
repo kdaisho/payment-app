@@ -9,8 +9,10 @@
 
 <div id="products">
 	{#each data.products as product (product.id)}
+		{@const ownedQuantity =
+			data.ownedProducts?.[data.userId]?.find((p) => p.id === product.id)?.quantity ?? 0}
 		<div class="product">
-			<h2>{product.name}</h2>
+			<h2>{product.name} <small>{ownedQuantity}</small></h2>
 			<p>{product.description}</p>
 			<p>
 				Price: {new Intl.NumberFormat(undefined, {

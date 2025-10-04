@@ -4,21 +4,18 @@
 import products from '$lib/server/data/products.json';
 import ownedProducts from '$lib/server/data/owned_products.json';
 import users from '$lib/server/data/users.json';
-import Stripe from 'stripe';
-import { STRIPE_SECRET_KEY } from '$env/static/private';
 import { z } from 'zod'
 import type { Actions } from './$types';
 import { fail, redirect } from '@sveltejs/kit';
-import { userDataFilePath } from '$lib/server/utils';
+import { stripe, userDataFilePath } from '$lib/server/utils';
 import fs from 'fs';
-
-const stripe = new Stripe(STRIPE_SECRET_KEY, { apiVersion: '2025-09-30.clover' });
 
 export const load = async ({ locals }) => {
     if (!locals.user) throw redirect(303, '/login');
 
     return {
         products,
+        userId: locals.user.id,
         ownedProducts
     };
 };
@@ -74,10 +71,14 @@ export const actions = {
                             description: product.description
                         }
                     },
-                    quantity: 1
+                    quantity: 1,
                 }
             ],
-            success_url: 'http://localhost:5173/purchase/success',
+            metadata: {
+                productId: product.id,
+                userId: user.id
+            },
+            success_url: 'http://localhost:5173/purchase/success?sessionId={CHECKOUT_SESSION_ID}',
             cancel_url: 'http://localhost:5173'
         });
 
